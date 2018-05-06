@@ -1,3 +1,4 @@
+from sklearn.ensemble import RandomForestClassifier
 from sklearn.neural_network import MLPClassifier
 import helper
 from sklearn.discriminant_analysis import LinearDiscriminantAnalysis
@@ -19,9 +20,10 @@ if __name__ == "__main__":
     models.append(('LR', LogisticRegression()))
     models.append(('LDA', LinearDiscriminantAnalysis()))
     models.append(('KNN', KNeighborsClassifier()))
-    models.append(('CART', DecisionTreeClassifier()))
+    models.append(('DTC', DecisionTreeClassifier()))
     models.append(('NB', GaussianNB()))
     models.append(('MLP', MLPClassifier()))
+    models.append(('RFC', RandomForestClassifier()))
    # models.append(('SVM', SVC()))
     # evaluate each model in turn
     results = []

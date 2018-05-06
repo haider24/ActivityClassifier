@@ -2,11 +2,13 @@ import glob
 import os
 import pandas as pd
 from sklearn import metrics
-from sklearn.cross_validation import KFold   #For K-fold cross validation
+
 import numpy as np
 import matplotlib.pyplot as plt
-from sklearn.learning_curve import learning_curve
-from sklearn import model_selection
+
+from sklearn.model_selection import learning_curve
+from sklearn.model_selection import KFold
+from sklearn.model_selection import train_test_split
 from sklearn.metrics import classification_report
 
 def readDirectory(path):
@@ -36,11 +38,11 @@ def testModel(model,dataSet,X,Y):
     predictions = model.predict(dataSet[X])
 
     accuracy = metrics.accuracy_score(predictions, dataSet[Y])
-    print("Accuracy : %s" % "{0:.3%}".format(accuracy))
+    print("Training Accuracy : %s" % "{0:.3%}".format(accuracy))
 
-    kf = KFold(dataSet.shape[0], n_folds=5)
+    kf = KFold(n_splits=5)
     error = []
-    for train, test in kf:
+    for train, test in kf.split(dataSet[X]):
         # Filter training data
         train_predictors = (dataSet[X].iloc[train, :])
 
@@ -53,7 +55,7 @@ def testModel(model,dataSet,X,Y):
         # Record error from each cross-validation run
         error.append(model.score(dataSet[X].iloc[test, :], dataSet[Y].iloc[test]))
 
-    print("Cross-Validation Score : %s" % "{0:.3%}".format(np.mean(error)))
+    print("K FoldCross-Validation Score : %s" % "{0:.3%}".format(np.mean(error)))
 
 
 def plot_learning_curve(estimator, title, X, Y, cv=None,n_jobs=1, train_sizes=np.linspace(.1, 1.0, 5)):
@@ -82,9 +84,11 @@ def plot_learning_curve(estimator, title, X, Y, cv=None,n_jobs=1, train_sizes=np
 def generateReport(model,dataSet,X,Y):
     test_size = 0.33
     seed = 7
-    X_train, X_test, Y_train, Y_test = model_selection.train_test_split(dataSet[X], dataSet[Y], test_size=test_size,
-                                                                        random_state=seed)
+    X_train, X_test, Y_train, Y_test = train_test_split(dataSet[X], dataSet[Y], test_size=test_size,random_state=seed)
     model.fit(X_train, Y_train)
+    accuracy=model.score(X_test,Y_test)
+    print("Cross-Validation Score : %s" % "{0:.3%}".format(accuracy))
     predicted = model.predict(X_test)
     report = classification_report(Y_test, predicted)
     return report
+
