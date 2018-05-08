@@ -25,7 +25,6 @@ if __name__ == "__main__":
     models.append(('MLP', MLPClassifier()))
     models.append(('RFC', RandomForestClassifier()))
    # models.append(('SVM', SVC()))
-    # evaluate each model in turn
     results = []
     algorithms = []
     scoring = 'accuracy'
@@ -34,11 +33,13 @@ if __name__ == "__main__":
         crossValidation = model_selection.cross_val_score(model, dataSet[X], dataSet[Y], cv=kfold, scoring=scoring)
         results.append(crossValidation)
         algorithms.append(name)
-        meanAndStd = "%s: %f (%f)" % (name, crossValidation.mean(), crossValidation.std())
+        meanAndStd = "%s: %s" % (name, "{0:.3%}".format(crossValidation.mean()))
         print(meanAndStd)
 
+
+
     fig = plt.figure()
-    fig.suptitle('Algorithm Comparison')
+    fig.suptitle('Learning Algorithms Comparison')
     ax = fig.add_subplot(111)
     plt.boxplot(results)
     ax.set_xticklabels(algorithms)
