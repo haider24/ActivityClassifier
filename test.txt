@@ -1,7 +1,0 @@
-climbingStairs = readDirectory(r'C:\Users\Admin\Desktop\HMP_Dataset\data\Climbing Stairs')
-    walking = readDirectory(r'C:\Users\Admin\Desktop\HMP_Dataset\data\Walking')
-    climbingStairs['Activity'] = 'Climbing Stairs'
-    walking['Activity'] = 'Walking'
-    frames = [climbingStairs, walking]
-    dataSet = pd.concat(frames)
-    dataSet = dataSet.sample(frac=1).reset_index(drop=True)

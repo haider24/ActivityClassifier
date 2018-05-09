@@ -1,0 +1,15 @@
+40 36 53 "Climbing Stairs"
+39 34 51 "Climbing Stairs"
+39 37 50 "Climbing Stairs"
+28 50 44 Walking
+30 48 41 Walking
+33 49 38 Walking
+34 35 53 Lying
+35 36 53 Lying
+35 34 52 Lying
+28 40 51 Sitting
+27 39 51 Sitting
+27 40 52 Sitting
+
+
+
